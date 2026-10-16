@@ -1,0 +1,26 @@
+{
+  "name": "careerpulse-server",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "node --watch index.js",
+    "test:classifier": "node scripts/testClassifier.js"
+  },
+  "engines": {
+    "node": ">=18.18"
+  },
+  "dependencies": {
+    "@google/genai": "^1.0.0",
+    "connect-mongo": "^5.1.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "express-session": "^1.19.0",
+    "fastest-levenshtein": "^1.0.16",
+    "googleapis": "^144.0.0",
+    "mongoose": "^8.9.0"
+  }
+}

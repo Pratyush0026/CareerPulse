@@ -1,0 +1,21 @@
+# Secrets – never commit these
+.env
+.env.*
+!.env.example
+credentials.json
+client_secret*.json
+token*.json
+*.token
+
+# Dependencies & builds
+node_modules/
+dist/
+build/
+
+# Logs / OS / editor
+*.log
+npm-debug.log*
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

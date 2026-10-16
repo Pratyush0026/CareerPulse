@@ -1,0 +1,17 @@
+{
+  "name": "careerpulse",
+  "version": "0.1.0",
+  "private": true,
+  "description": "CareerPulse – local job application tracker powered by Gmail + Gemini",
+  "type": "module",
+  "scripts": {
+    "install:all": "npm install && cd server && npm install && cd ../client && npm install",
+    "dev": "concurrently -n server,client -c blue,magenta \"npm run dev --prefix server\" \"npm run dev --prefix client\"",
+    "server": "npm run dev --prefix server",
+    "client": "npm run dev --prefix client",
+    "test:classifier": "npm run test:classifier --prefix server"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2"
+  }
+}
