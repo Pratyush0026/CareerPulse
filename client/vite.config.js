@@ -12,7 +12,16 @@ export default defineConfig(({ mode }) => {
       port: clientPort,
       strictPort: true, // Google redirects back to CLIENT_URL, so the port can't drift
       proxy: {
-        '/api': `http://localhost:${apiPort}`,
+        '/api': {
+          target: `http://localhost:${apiPort}`,
+          // A clear message instead of a blank 500 while the API is starting or has stopped.
+          configure: (proxy) =>
+            proxy.on('error', (err, req, res) => {
+              if (res.headersSent) return;
+              res.writeHead(503, { 'Content-Type': 'application/json' });
+              res.end(JSON.stringify({ error: 'The CareerPulse API isn’t running yet. Give it a few seconds, or check the server terminal.' }));
+            }),
+        },
       },
     },
   };

@@ -9,9 +9,15 @@
     "dev": "concurrently -n server,client -c blue,magenta \"npm run dev --prefix server\" \"npm run dev --prefix client\"",
     "server": "npm run dev --prefix server",
     "client": "npm run dev --prefix client",
-    "test:classifier": "npm run test:classifier --prefix server"
+    "test:classifier": "npm run test:classifier --prefix server",
+    "test:career-dna": "npm run test:career-dna --prefix server",
+    "lint": "eslint client/src server"
   },
   "devDependencies": {
-    "concurrently": "^9.1.2"
+    "@eslint/js": "^9.39.1",
+    "concurrently": "^9.1.2",
+    "eslint": "^9.39.1",
+    "eslint-plugin-react-hooks": "^5.2.0",
+    "globals": "^16.5.0"
   }
 }

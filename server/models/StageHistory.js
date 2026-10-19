@@ -8,4 +8,6 @@ const stageHistorySchema = new mongoose.Schema({
   changedAt: { type: Date, default: Date.now },
 });
 
+stageHistorySchema.index({ applicationId: 1, changedAt: 1 });
+
 export default mongoose.model('StageHistory', stageHistorySchema);

@@ -12,8 +12,10 @@ router.get('/google', (req, res, next) => {
   try {
     // Checked in the callback so a login redirect can't be forged.
     const state = crypto.randomBytes(16).toString('hex');
+    // Built before saving: an error inside the save callback would escape this try/catch and crash the server.
+    const url = getAuthUrl(state);
     req.session.oauthState = state;
-    req.session.save(() => res.redirect(getAuthUrl(state)));
+    req.session.save((err) => (err ? next(err) : res.redirect(url)));
   } catch (err) {
     next(err);
   }

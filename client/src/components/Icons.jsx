@@ -18,3 +18,54 @@ export const IconX = (p) => <Icon {...p}><circle cx="12" cy="12" r="9" /><path d
 export const IconPercent = (p) => <Icon {...p}><path d="M19 5 5 19" /><circle cx="6.5" cy="6.5" r="2.5" /><circle cx="17.5" cy="17.5" r="2.5" /></Icon>;
 export const IconChevron = (p) => <Icon {...p}><path d="m6 9 6 6 6-6" /></Icon>;
 export const IconBot = (p) => <Icon {...p}><rect x="4" y="8" width="16" height="12" rx="3" /><path d="M12 4v4M9 14h.01M15 14h.01" /></Icon>;
+export const IconDna = (p) => (
+  <Icon {...p}>
+    <path d="M4.5 3.5c4 4 11 13 15 17" />
+    <path d="M19.5 3.5c-4 4-11 13-15 17" />
+    <path d="m6.5 12.5 11-1" />
+    <path d="m8.5 7.5 7 1" />
+    <path d="m8.5 16.5 7-1" />
+  </Icon>
+);
+export const IconSparkles = (p) => (
+  <Icon {...p}>
+    <path d="m12 3 1.9 5.8a2 2 0 0 0 1.3 1.3L21 12l-5.8 1.9a2 2 0 0 0-1.3 1.3L12 21l-1.9-5.8a2 2 0 0 0-1.3-1.3L3 12l5.8-1.9a2 2 0 0 0 1.3-1.3Z" />
+  </Icon>
+);
+export const IconEdit = (p) => (
+  <Icon {...p}>
+    <path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z" />
+  </Icon>
+);
+export const IconCheck = (p) => (
+  <Icon {...p}>
+    <path d="M20 6 9 17l-5-5" />
+  </Icon>
+);
+export const IconUpload = (p) => (
+  <Icon {...p}>
+    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+    <polyline points="17 8 12 3 7 8" />
+    <line x1="12" y1="3" x2="12" y2="15" />
+  </Icon>
+);
+export const IconExternalLink = (p) => (
+  <Icon {...p}>
+    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+    <polyline points="15 3 21 3 21 9" />
+    <line x1="10" y1="14" x2="21" y2="3" />
+  </Icon>
+);
+export const IconArrowLeft = (p) => (
+  <Icon {...p}>
+    <line x1="19" y1="12" x2="5" y2="12" />
+    <polyline points="12 19 5 12 12 5" />
+  </Icon>
+);
+export const IconTarget = (p) => (
+  <Icon {...p}>
+    <circle cx="12" cy="12" r="10" />
+    <circle cx="12" cy="12" r="6" />
+    <circle cx="12" cy="12" r="2" />
+  </Icon>
+);

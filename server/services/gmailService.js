@@ -126,8 +126,13 @@ export async function disconnect(userId) {
 
 // Plain "offer" is left out on purpose: it matches every bank and shopping promo.
 const JOB_TERMS =
-  '(interview OR assessment OR shortlisted OR "your application" OR "regret to inform" OR "thank you for applying" ' +
-  'OR "next round" OR "test link" OR "offer letter" OR "job offer" OR "pleased to offer" OR "offer of employment")';
+  '(' +
+  'interview OR assessment OR shortlisted OR "your application" OR "application status" OR "job status" OR "status update" ' +
+  'OR "update on your" OR "regret to inform" OR "thank you for applying" OR "thank you for your interest" OR "appreciate your interest" ' +
+  'OR "not moving forward" OR "not quite suitable" OR "not suitable" OR "not selected" OR "other candidates" OR "unfortunately" ' +
+  'OR "candidature" OR "candidacy" OR "application received" OR "application submitted" OR "next round" OR "test link" ' +
+  'OR "offer letter" OR "job offer" OR "pleased to offer" OR "offer of employment"' +
+  ')';
 
 /**
  * Gmail search for job emails. With `since` only newer mail is searched (incremental sync),

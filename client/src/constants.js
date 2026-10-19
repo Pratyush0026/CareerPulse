@@ -31,3 +31,10 @@ export function avatarColors(name = '') {
   const i = [...name].reduce((sum, ch) => sum + ch.charCodeAt(0), 0) % AVATAR_COLORS.length;
   return { background: AVATAR_COLORS[i], color: AVATAR_TEXT[i] };
 }
+
+// authuser picks the right account when several are signed in. Putting the email in the
+// /u/<...>/ path instead gets it URL-encoded, and Gmail answers that with a 404.
+export function gmailUrl(messageId, accountEmail) {
+  const account = accountEmail ? `?authuser=${encodeURIComponent(accountEmail)}` : '';
+  return `https://mail.google.com/mail/${account}#all/${messageId}`;
+}

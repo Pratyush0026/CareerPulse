@@ -27,7 +27,7 @@ const ALERT_SUBJECTS = [
 ];
 
 const REAL_UPDATE_HINTS =
-  /(your application|application (for|to|was|has been|received|submitted|status)|thank you for applying|interview (is )?(scheduled|invite|invitation)|assessment|online test|shortlisted|offer letter|regret to inform|not (be )?moving forward|next round)/i;
+  /(your application|application (for|to|was|has been|received|submitted|status)|job status|status update|thank you for applying|thank you for your interest|appreciate your interest|interview (is )?(scheduled|invite|invitation)|assessment|online test|shortlisted|offer letter|regret to inform|not (be )?(quite )?(suitable|moving forward)|other candidates|next round)/i;
 
 /** Returns why an email can be skipped without AI, or null if the AI should read it. */
 export function ruleBasedSkipReason({ sender = '', subject = '' }) {

@@ -1,16 +1,9 @@
-import { avatarColors, formatDate, timeAgo } from '../constants.js';
+import { avatarColors, formatDate, gmailUrl, timeAgo } from '../constants.js';
 import { IconTrash, IconLink, IconCalendar, IconMail } from './Icons.jsx';
 
 const FallbackTag = ({ what }) => (
   <span className="tag tag-fallback" title={`Not stated in the email – ${what}`}>Fallback</span>
 );
-
-// authuser picks the right account when several are signed in. Putting the email in the
-// /u/<...>/ path instead gets it URL-encoded, and Gmail answers that with a 404.
-export function gmailUrl(messageId, accountEmail) {
-  const account = accountEmail ? `?authuser=${encodeURIComponent(accountEmail)}` : '';
-  return `https://mail.google.com/mail/${account}#all/${messageId}`;
-}
 
 export default function ApplicationCard({ app, provided, isDragging, isNew, onDelete, gmailAccount }) {
   const isUpcoming = app.eventDate && new Date(app.eventDate) >= new Date(new Date().toDateString());

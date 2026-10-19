@@ -16,6 +16,9 @@ const applicationSchema = new mongoose.Schema(
     lastSummary: { type: String, default: null },
     // Newest email applied, or the last manual edit. Older emails may only fill gaps.
     lastEmailAt: { type: Date, default: null },
+    // When the first email about this application arrived. Cards are created at sync time, so
+    // this is the closer date for "when did I apply" (null for manual cards: use createdAt).
+    firstEmailAt: { type: Date, default: null },
     // Lets the card open the email in Gmail. Only the ID is kept, never the content.
     lastMessageId: { type: String, default: null },
     // Fields that were guessed rather than read from an email ('platform', 'stage').

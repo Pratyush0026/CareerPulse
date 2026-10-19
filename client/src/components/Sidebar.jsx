@@ -1,8 +1,9 @@
 import { NavLink } from 'react-router-dom';
-import { IconDashboard, IconChart, IconBot, IconMail } from './Icons.jsx';
+import { IconDashboard, IconChart, IconBot, IconMail, IconDna } from './Icons.jsx';
 
 const NAV = [
   { to: '/', label: 'Dashboard', Icon: IconDashboard },
+  { to: '/career-dna', label: 'Career DNA', Icon: IconDna },
   { to: '/insights', label: 'Insights', Icon: IconChart },
   { to: '/activity', label: 'AI Activity', Icon: IconBot },
 ];

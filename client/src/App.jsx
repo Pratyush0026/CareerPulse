@@ -14,6 +14,7 @@ import LoginScreen from './components/LoginScreen.jsx';
 import { IconMail, IconTrash } from './components/Icons.jsx';
 import DashboardPage from './pages/DashboardPage.jsx';
 import ActivityPage from './pages/ActivityPage.jsx';
+import CareerDnaPage from './pages/CareerDnaPage.jsx';
 
 // Recharts is most of the bundle, so the insights page loads separately.
 const InsightsPage = lazy(() => import('./pages/InsightsPage.jsx'));
@@ -121,6 +122,7 @@ export default function App() {
     }
     if (result) navigate(location.pathname, { replace: true });
     // Runs once on load; the OAuth result is only ever in the first URL.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // Sync
@@ -350,6 +352,10 @@ export default function App() {
                   onDelete={onDelete}
                 />
               }
+            />
+            <Route
+              path="/career-dna"
+              element={<CareerDnaPage notify={notify} confirm={confirm} gmailAccount={status.email} />}
             />
             <Route
               path="/insights"

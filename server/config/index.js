@@ -32,6 +32,8 @@ const config = {
       .filter(Boolean),
     delayMs: num(process.env.GEMINI_DELAY_MS, 4000),
     maxRetries: num(process.env.GEMINI_MAX_RETRIES, 4),
+    // Hard stop on requests per day (retries included), so a bug or runaway sync can't run up a bill.
+    dailyRequestLimit: num(process.env.GEMINI_DAILY_REQUEST_LIMIT, 500),
   },
 
   sync: {

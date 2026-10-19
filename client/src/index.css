@@ -37,6 +37,11 @@ h1, h2 { margin: 0; }
 .muted { color: var(--muted); }
 .cap { text-transform: capitalize; }
 
+.text-danger { color: #ef4444 !important; }
+
+.text-xs { font-size: 11px; }
+.text-sm { font-size: 13px; }
+
 /* ---------- Layout ---------- */
 .layout { display: grid; grid-template-columns: 240px minmax(0, 1fr); min-height: 100vh; }
 .main { padding: 20px 28px 40px; min-width: 0; display: flex; flex-direction: column; gap: 18px; }
@@ -104,8 +109,7 @@ h1, h2 { margin: 0; }
   display: inline-flex; align-items: center; gap: 7px; padding: 6px 12px; border-radius: 999px;
   font-size: 12.5px; font-weight: 600; white-space: nowrap;
 }
-.pill-green { background: #dcfce7; color: #166534; cursor: pointer; border: 0; }
-.pill-green:hover { background: #bbf7d0; }
+
 .pill-muted { background: var(--surface-2); color: var(--text-2); border: 1px solid var(--border); }
 
 .spinner {
@@ -233,16 +237,43 @@ h1, h2 { margin: 0; }
 .confidence.rule { color: var(--muted); font-weight: 600; }
 .btn-sm { padding: 7px 12px; font-size: 13px; border-radius: 9px; }
 
-/* ---------- Modal ---------- */
-.modal-backdrop { position: fixed; inset: 0; background: rgba(15, 21, 53, 0.45); display: grid; place-items: center; padding: 16px; z-index: 50; animation: fade 0.15s; }
-.modal { background: var(--surface); width: 100%; max-width: 440px; border-radius: 18px; padding: 22px; box-shadow: var(--shadow-lg); display: flex; flex-direction: column; gap: 14px; }
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 21, 53, 0.55);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  display: grid;
+  place-items: center;
+  padding: 16px;
+  z-index: 100;
+  animation: fade 0.15s ease-out;
+}
+.modal {
+  background: var(--surface);
+  width: 100%;
+  max-width: 440px;
+  border-radius: 18px;
+  padding: 22px;
+  box-shadow: var(--shadow-lg), 0 20px 40px -15px rgba(15, 23, 42, 0.25);
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
 .modal-head { display: flex; justify-content: space-between; align-items: center; }
 .modal-head h2 { font-size: 18px; font-weight: 800; }
 .modal label { display: flex; flex-direction: column; gap: 6px; font-size: 13px; font-weight: 600; color: var(--text-2); flex: 1; }
-.modal input, .modal select { padding: 10px 12px; border: 1px solid var(--border); border-radius: 10px; background: var(--surface); font-size: 14px; outline: 0; }
-.modal input:focus, .modal select:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.12); }
+.modal input, .modal select, .modal textarea { padding: 10px 12px; border: 1px solid var(--border); border-radius: 10px; background: var(--surface); font-size: 14px; font-family: inherit; outline: 0; }
+.modal input:focus, .modal select:focus, .modal textarea:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.12); }
 .form-row { display: flex; gap: 12px; }
 .modal-actions { display: flex; justify-content: flex-end; gap: 8px; margin-top: 4px; }
+/* Long dialogs scroll as a whole rather than squashing their fields to fit. */
+.modal { max-height: calc(100vh - 32px); overflow-y: auto; }
+.modal > * { flex-shrink: 0; }
+/* Grows with what's typed (where the browser supports it), up to a point, then scrolls. */
+.modal textarea { min-height: 80px; max-height: 320px; field-sizing: content; resize: vertical; line-height: 1.45; }
+.modal-field { display: flex; flex-direction: column; gap: 6px; }
+.field-hint { font-size: 12px; color: var(--muted); }
 @keyframes fade { from { opacity: 0; } }
 
 /* ---------- Toasts (stacked, bottom-right) ---------- */
@@ -462,4 +493,2713 @@ a.nav-item { text-decoration: none; }
   .toolbar-select { flex: 1 1 calc(50% - 5px); }
   .toolbar-select select { width: 100%; }
   .toolbar-meta { margin-left: 0; width: 100%; justify-content: space-between; }
+}
+
+/* ---------------------------------------------------------------
+   Career DNA styles
+   --------------------------------------------------------------- */
+
+.career-dna-page {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 100%;
+}
+
+/* Onboarding & Hero Dropzone */
+.career-dna-onboarding {
+  display: flex;
+  justify-content: center;
+  padding: 20px 0 40px;
+}
+
+.dna-hero-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 40px;
+  max-width: 760px;
+  width: 100%;
+  text-align: center;
+  box-shadow: var(--shadow);
+}
+
+.dna-hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 12px;
+  background: #ede9fe;
+  color: #6366f1;
+  font-size: 12px;
+  font-weight: 700;
+  border-radius: 999px;
+  margin-bottom: 16px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.dna-hero-title {
+  font-size: 26px;
+  font-weight: 800;
+  line-height: 1.25;
+  letter-spacing: -0.02em;
+  margin: 0;
+  color: var(--navy);
+}
+
+.dna-hero-title.accent-text {
+  color: var(--accent);
+  margin-bottom: 12px;
+}
+
+.dna-hero-desc {
+  font-size: 15px;
+  color: var(--muted);
+  max-width: 580px;
+  margin: 0 auto 28px;
+  line-height: 1.5;
+}
+
+.dna-dropzone {
+  border: 2px dashed var(--border-strong);
+  border-radius: 12px;
+  padding: 36px 20px;
+  background: var(--surface-2);
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.dna-dropzone:hover,
+.dna-dropzone.drag-over {
+  border-color: var(--accent);
+  background: #f5f3ff;
+}
+
+.dna-dropzone.is-uploading {
+  cursor: wait;
+  border-style: solid;
+  border-color: var(--accent);
+  background: #faf5ff;
+}
+
+.dna-dropzone-icon {
+  width: 54px;
+  height: 54px;
+  border-radius: 14px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  display: grid;
+  place-items: center;
+  color: var(--accent);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+}
+
+.dna-dropzone-title {
+  font-size: 15px;
+  color: var(--text);
+}
+
+.dna-dropzone-sub {
+  font-size: 13px;
+  color: var(--muted);
+  margin-top: 4px;
+}
+
+.dna-upload-progress {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.dna-upload-text {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--navy);
+}
+
+.dna-upload-sub {
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.dna-spinner {
+  width: 26px;
+  height: 26px;
+  border: 3px solid #e0e7ff;
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: dna-spin 0.8s linear infinite;
+}
+
+@keyframes dna-spin {
+  to { transform: rotate(360deg); }
+}
+
+.dna-onboarding-actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  margin: 22px 0 20px;
+}
+
+.dna-or-divider {
+  font-size: 13px;
+  color: var(--muted);
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.dna-privacy-guarantee {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-size: 12px;
+  color: var(--muted);
+  background: var(--surface-2);
+  padding: 10px 14px;
+  border-radius: 8px;
+  margin-top: 14px;
+  line-height: 1.4;
+  text-align: left;
+}
+
+.dna-error-box {
+  margin-top: 14px;
+  padding: 10px 14px;
+  border-radius: 8px;
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  color: #b91c1c;
+  font-size: 13.5px;
+}
+
+/* Completeness Card */
+.dna-completeness-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 22px 26px;
+  box-shadow: var(--shadow);
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.dna-completeness-header {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.dna-completeness-circle-wrap {
+  width: 106px;
+  min-width: 106px;
+  height: 106px;
+  border-radius: 50%;
+  background: #f5f3ff;
+  border: 3.5px solid #c7d2fe;
+  box-shadow: 0 4px 14px rgba(99, 102, 241, 0.12);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.dna-completeness-num {
+  font-size: 28px;
+  font-weight: 800;
+  color: var(--accent);
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+
+.dna-completeness-label {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--muted);
+  margin-top: 4px;
+}
+
+.dna-completeness-info {
+  flex: 1;
+}
+
+.dna-completeness-title {
+  font-size: 17px;
+  font-weight: 800;
+  color: var(--navy);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.dna-completeness-desc {
+  margin: 4px 0 10px;
+  font-size: 13px;
+  color: var(--muted);
+  line-height: 1.4;
+}
+
+.dna-progress-bar-bg {
+  width: 100%;
+  height: 8px;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.dna-progress-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #6366f1, #14b8a6);
+  border-radius: 999px;
+  transition: width 0.4s ease-out;
+}
+
+.dna-breakdown-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+  gap: 10px;
+  padding-top: 6px;
+  border-top: 1px solid var(--border);
+}
+
+.dna-breakdown-item {
+  background: var(--surface-2);
+  padding: 8px 12px;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.dna-breakdown-label {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.dna-breakdown-val {
+  font-size: 13.5px;
+  font-weight: 800;
+  color: var(--navy);
+}
+
+.dna-missing-items {
+  padding-top: 10px;
+  border-top: 1px dashed var(--border);
+}
+
+.dna-missing-title {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text-2);
+  margin-bottom: 8px;
+}
+
+.dna-missing-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.dna-missing-tag-btn {
+  background: #fef3c7;
+  color: #92400e;
+  border: 1px solid #fde68a;
+  border-radius: 999px;
+  padding: 4px 10px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.dna-missing-tag-btn:hover {
+  background: #fde68a;
+}
+
+.dna-complete-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: #047857;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+/* Overview Layout & Identity Banner */
+.dna-overview-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.dna-identity-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 28px;
+  box-shadow: var(--shadow);
+}
+
+.dna-identity-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.dna-identity-main {
+  flex: 1;
+  min-width: 280px;
+}
+
+.dna-identity-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--accent);
+  letter-spacing: 0.05em;
+  margin-bottom: 6px;
+}
+
+.dna-headline {
+  font-size: 24px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--navy);
+  margin: 0 0 8px;
+}
+
+.dna-summary {
+  font-size: 14.5px;
+  color: var(--text-2);
+  line-height: 1.5;
+  margin: 0 0 14px;
+  max-width: 800px;
+}
+
+.dna-meta-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+
+.dna-meta-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 10px;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--text-2);
+}
+
+.dna-social-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.dna-link-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 10px;
+  border-radius: 6px;
+  background: #f1f5f9;
+  border: 1px solid #cbd5e1;
+  color: #334155;
+  font-size: 12px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background 0.12s;
+}
+
+.dna-link-badge:hover {
+  background: #e2e8f0;
+}
+
+.dna-overview-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Section Cards */
+.dna-section-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 24px 28px;
+  box-shadow: var(--shadow);
+}
+
+.dna-section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 18px;
+}
+
+.dna-section-title {
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--navy);
+  letter-spacing: -0.01em;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Goals Grid */
+.dna-goals-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+}
+
+.dna-goal-block {
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 12px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.dna-goal-block.full-width {
+  grid-column: 1 / -1;
+}
+
+.dna-goal-label {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.dna-goal-val-highlight {
+  font-size: 16px;
+  font-weight: 800;
+  color: var(--navy);
+}
+
+.dna-goal-val {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.dna-pills-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 4px;
+}
+
+.dna-pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 9px;
+  border-radius: 999px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-2);
+}
+
+.dna-pill.pill-accent {
+  background: #ede9fe;
+  color: #6366f1;
+  border-color: #ddd6fe;
+}
+
+.dna-pill.pill-success {
+  background: #d1fae5;
+  color: #065f46;
+  border-color: #a7f3d0;
+}
+
+/* Skills Category & Chips */
+.dna-skills-categories {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.dna-skill-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.dna-skill-cat-title {
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--muted);
+}
+
+.dna-skills-tag-cloud {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.dna-skill-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  transition: all 0.15s;
+}
+
+.dna-skill-chip.confirmed {
+  background: #ecfdf5;
+  border-color: #a7f3d0;
+  color: #065f46;
+}
+
+.dna-skill-chip.unconfirmed {
+  background: #f8fafc;
+  border-color: #e2e8f0;
+  color: #475569;
+}
+
+.dna-skill-name {
+  font-weight: 700;
+}
+
+.dna-skill-cat,
+.dna-skill-source {
+  font-size: 10.5px;
+  color: var(--muted);
+  background: rgba(0, 0, 0, 0.04);
+  padding: 1px 5px;
+  border-radius: 4px;
+}
+
+.dna-skill-toggle-btn {
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+  display: inline-grid;
+  place-items: center;
+  color: inherit;
+  opacity: 0.8;
+  padding: 0;
+}
+
+.dna-skill-toggle-btn:hover {
+  opacity: 1;
+}
+
+.dna-skill-del-btn {
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1;
+}
+
+.dna-skill-del-btn:hover {
+  color: #ef4444;
+}
+
+/* Experience Timeline */
+/* Dots line up with each role title. Every item draws the line down to the next dot,
+   so it stays centred on the dots and stops at the last role. */
+.dna-timeline {
+  --dot-size: 12px;
+  --dot-top: 21px;
+  --item-gap: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--item-gap);
+  padding-left: 22px;
+}
+
+.dna-timeline-item {
+  position: relative;
+}
+
+.dna-timeline-item:not(:last-child)::before {
+  content: '';
+  position: absolute;
+  left: calc(-22px + var(--dot-size) / 2 - 1px);
+  top: calc(var(--dot-top) + var(--dot-size) / 2);
+  bottom: calc(-1 * (var(--item-gap) + var(--dot-top) + var(--dot-size) / 2));
+  width: 2px;
+  background: var(--border);
+}
+
+.dna-timeline-dot {
+  position: absolute;
+  z-index: 1;
+  left: -22px;
+  top: var(--dot-top);
+  width: var(--dot-size);
+  height: var(--dot-size);
+  border-radius: 50%;
+  background: var(--navy);
+  border: 2px solid var(--surface);
+  box-shadow: 0 0 0 2px var(--border-strong);
+}
+
+.dna-timeline-content {
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 16px 20px;
+}
+
+.dna-exp-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.dna-exp-role {
+  font-size: 16px;
+  font-weight: 800;
+  color: var(--navy);
+  margin: 0;
+}
+
+.dna-exp-company {
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--text-2);
+  margin-top: 2px;
+}
+
+.dna-exp-dates {
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--muted);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.dna-exp-desc {
+  font-size: 13.5px;
+  line-height: 1.45;
+  color: var(--text);
+  margin: 8px 0 0;
+}
+
+.dna-achievements-block,
+.dna-outcomes-block {
+  margin-top: 10px;
+}
+
+.dna-achieve-label {
+  font-size: 11.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 4px;
+}
+
+.dna-bullet-list {
+  margin: 0;
+  padding-left: 18px;
+  font-size: 13px;
+  color: var(--text-2);
+  line-height: 1.45;
+}
+
+.dna-outcomes-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.dna-metric-pill {
+  background: #f0fdf4;
+  border: 1px solid #bbf7d0;
+  color: #15803d;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 6px;
+}
+
+/* Projects Grid */
+.dna-projects-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 16px;
+}
+
+.dna-project-card {
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.dna-project-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.dna-project-title {
+  font-size: 15.5px;
+  font-weight: 800;
+  color: var(--navy);
+  margin: 0;
+}
+
+.dna-project-role {
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--accent);
+}
+
+.dna-project-desc {
+  font-size: 13px;
+  color: var(--text-2);
+  line-height: 1.4;
+  margin: 4px 0;
+}
+
+.dna-project-techs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin-top: 4px;
+}
+
+.dna-project-outcomes {
+  margin-top: 6px;
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.dna-outcome-bullet {
+  line-height: 1.35;
+}
+
+/* Education Grid */
+.dna-education-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 14px;
+}
+
+.dna-edu-card {
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 14px;
+}
+
+.dna-edu-degree {
+  font-size: 15px;
+  font-weight: 800;
+  color: var(--navy);
+}
+
+.dna-edu-inst {
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--text-2);
+  margin-top: 2px;
+}
+
+.dna-edu-field {
+  font-size: 12.5px;
+  color: var(--muted);
+  margin-top: 2px;
+}
+
+/* Interests Grid */
+.dna-interests-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 10px;
+}
+
+.dna-interest-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+
+.dna-interest-card.confirmed {
+  background: #f0fdf4;
+  border-color: #bbf7d0;
+}
+
+.dna-interest-text {
+  min-width: 0;
+  font-size: 13.5px;
+  font-weight: 700;
+  line-height: 1.35;
+  color: var(--navy);
+}
+
+.dna-interest-card .dna-pill,
+.dna-interest-actions { flex-shrink: 0; white-space: nowrap; }
+
+.dna-interest-actions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* Forms */
+.dna-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.dna-form-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.dna-form-actions {
+  position: sticky;
+  bottom: 0;
+  z-index: 5;
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  padding: 12px 16px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: 0 -6px 20px rgba(15, 23, 42, 0.08);
+}
+
+.dna-form-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 24px 28px;
+  box-shadow: var(--shadow);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.dna-card-title {
+  font-size: 17px;
+  font-weight: 800;
+  color: var(--navy);
+  margin: 0;
+}
+
+.dna-card-header-action {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.dna-form-row {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.dna-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 140px;
+}
+
+.dna-field.flex-1 { flex: 1; }
+.dna-field.flex-2 { flex: 2; }
+
+.dna-field label {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text-2);
+}
+
+.dna-field input,
+.dna-field select,
+.dna-field textarea {
+  width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+  padding: 9px 12px;
+  font-family: inherit;
+  border-radius: 9px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+  font-size: 13.5px;
+}
+
+.dna-field input:focus,
+.dna-field select:focus,
+.dna-field textarea:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.12);
+}
+
+.dna-checkbox-field {
+  justify-content: center;
+}
+
+.dna-checkbox-field input { width: auto; }
+
+.app-picker { position: relative; }
+.dna-field .app-picker input { padding-right: 34px; text-overflow: ellipsis; }
+.app-picker input.has-selection::placeholder { color: var(--text); opacity: 1; }
+
+.app-picker-clear {
+  position: absolute;
+  top: 50%;
+  right: 6px;
+  transform: translateY(-50%);
+  display: grid;
+  place-items: center;
+  width: 24px;
+  height: 24px;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--muted);
+  cursor: pointer;
+}
+.app-picker-clear:hover { background: var(--surface-2); color: var(--text); }
+
+.app-picker-list {
+  position: absolute;
+  z-index: 20;
+  top: calc(100% + 4px);
+  left: 0;
+  right: 0;
+  max-height: 260px;
+  overflow-y: auto;
+  margin: 0;
+  padding: 4px;
+  list-style: none;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  box-shadow: 0 12px 28px rgba(15, 23, 42, 0.12);
+}
+
+.app-picker-list li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 10px;
+  border-radius: 7px;
+  font-size: 13px;
+  cursor: pointer;
+}
+.app-picker-list li.is-active { background: var(--surface-2); }
+.app-picker-list li[aria-selected='true'] .app-picker-name { font-weight: 700; }
+.app-picker-name { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.app-picker-stage { flex-shrink: 0; font-size: 11.5px; color: var(--muted); }
+.app-picker-list .app-picker-empty { color: var(--muted); cursor: default; }
+
+.app-picker-sources {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 12px;
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.app-picker-sources a {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-weight: 600;
+  color: var(--accent);
+  text-decoration: none;
+}
+.app-picker-sources a:hover { text-decoration: underline; }
+
+.dna-checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-2);
+  cursor: pointer;
+}
+
+.dna-add-skill-row {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.dna-add-skill-row input {
+  flex: 2;
+  min-width: 200px;
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+}
+
+.dna-add-skill-row select {
+  flex: 1;
+  min-width: 140px;
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+}
+
+.dna-sub-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.dna-sub-card {
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.dna-sub-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.dna-sub-card-index {
+  font-size: 11.5px;
+  font-weight: 800;
+  color: var(--muted);
+  text-transform: uppercase;
+}
+
+.dna-tag-pill {
+  font-size: 10.5px;
+  font-weight: 700;
+  padding: 2px 7px;
+  border-radius: 999px;
+  background: #ede9fe;
+  color: #6366f1;
+  text-transform: uppercase;
+  white-space: nowrap;
+  margin-left: 6px;
+  vertical-align: 1px;
+}
+
+.dna-tag-pill.success {
+  background: #d1fae5;
+  color: #065f46;
+}
+
+.dna-loading-state,
+.dna-error-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 350px;
+  gap: 14px;
+}
+
+/* ---------------------------------------------------------------
+   Career Evidence Engine (Phase 2) styles
+   --------------------------------------------------------------- */
+
+/* Evidence Level Badges */
+.evidence-level-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-weight: 700;
+  border-radius: 999px;
+  letter-spacing: -0.01em;
+  max-width: 100%;
+  flex-shrink: 0;
+}
+
+.evidence-badge-text {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.evidence-level-badge.size-sm {
+  font-size: 11px;
+  padding: 3px 8px;
+}
+
+.evidence-level-badge.size-md {
+  font-size: 12px;
+  padding: 4px 10px;
+}
+
+.badge-evidence-assessment {
+  background: #ccfbf1;
+  color: #0f766e;
+  border: 1px solid #99f6e4;
+}
+
+.badge-evidence-confirmed {
+  background: #ecfdf5;
+  color: #065f46;
+  border: 1px solid #a7f3d0;
+}
+
+.badge-evidence-supported {
+  background: #e0e7ff;
+  color: #4338ca;
+  border: 1px solid #c7d2fe;
+}
+
+.badge-evidence-mentioned {
+  background: #fef3c7;
+  color: #92400e;
+  border: 1px solid #fde68a;
+}
+
+.badge-evidence-needed {
+  background: #fee2e2;
+  color: #b91c1c;
+  border: 1px solid #fecaca;
+}
+
+/* Evidence Engine Section Card */
+.evidence-engine-card {
+  border-top: 3px solid var(--accent);
+}
+
+.text-indigo { color: #6366f1; }
+.text-emerald { color: #10b981; }
+.text-amber { color: #f59e0b; }
+.text-rose { color: #ef4444; }
+
+/* Search & Tabs Controls Bar */
+.evidence-controls-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--border);
+}
+
+.evidence-search-box {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 7px 12px;
+  min-width: 250px;
+  flex: 1;
+  max-width: 380px;
+}
+
+.evidence-search-box input {
+  border: 0;
+  background: transparent;
+  outline: none;
+  font-size: 13.5px;
+  width: 100%;
+  color: var(--text);
+}
+
+.evidence-filter-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.evidence-tab {
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 5px 12px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-2);
+  cursor: pointer;
+  transition: all 0.12s;
+}
+
+.evidence-tab:hover {
+  background: var(--border);
+}
+
+.evidence-tab.active {
+  background: var(--navy);
+  border-color: var(--navy);
+  color: #fff;
+}
+
+/* Skills Grid */
+.evidence-skills-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 16px;
+}
+
+@media (max-width: 640px) {
+  .evidence-skills-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.evidence-skill-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 16px 18px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 12px;
+  min-width: 0;
+  overflow: hidden;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.evidence-skill-card:hover {
+  border-color: var(--border-strong);
+  box-shadow: var(--shadow);
+}
+
+.evidence-card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.evidence-card-title-group {
+  min-width: 0;
+  flex: 1 1 auto;
+}
+
+.evidence-skill-title {
+  font-size: 16px;
+  font-weight: 800;
+  color: var(--navy);
+  margin: 0 0 4px;
+  word-break: break-word;
+}
+
+.category-pill {
+  font-size: 11px;
+}
+
+.evidence-provenance-text {
+  font-size: 13px;
+  color: var(--text-2);
+  line-height: 1.45;
+  margin: 0;
+  background: var(--surface-2);
+  padding: 8px 12px;
+  border-radius: 8px;
+  border-left: 3px solid var(--accent);
+}
+
+.evidence-card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  padding-top: 8px;
+  border-top: 1px solid var(--border);
+}
+
+.evidence-proof-counts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.proof-pill {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--muted);
+}
+
+.btn-xs {
+  font-size: 12px;
+  padding: 4px 10px;
+  border-radius: 8px;
+  font-weight: 700;
+}
+
+/* Evidence Modal */
+.evidence-modal-card {
+  background: var(--surface) !important;
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 26px 28px;
+  box-shadow: 0 25px 50px -12px rgba(15, 23, 42, 0.35), 0 0 0 1px rgba(0, 0, 0, 0.05);
+  max-width: 720px;
+  width: 100%;
+  max-height: 88vh;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  position: relative;
+  z-index: 60;
+  animation: modalPop 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.dna-modal {
+  background: var(--surface) !important;
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 24px 26px;
+  box-shadow: 0 25px 50px -12px rgba(15, 23, 42, 0.35);
+  max-width: 520px;
+  width: 100%;
+  max-height: 88vh;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  animation: modalPop 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.dna-compact-upload {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.dna-dropzone.compact {
+  padding: 24px 18px;
+  gap: 10px;
+}
+
+.dna-privacy-guarantee.compact {
+  margin: 0;
+  padding: 10px 14px;
+  font-size: 12px;
+  border-radius: 8px;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+}
+
+@keyframes modalPop {
+  from {
+    opacity: 0;
+    transform: scale(0.96) translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.evidence-modal-badge-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.evidence-modal-title {
+  font-size: 24px;
+  font-weight: 800;
+  color: var(--navy);
+  margin: 0 0 4px;
+  letter-spacing: -0.01em;
+}
+
+.evidence-modal-summary {
+  font-size: 13.5px;
+  color: var(--text-2);
+  line-height: 1.45;
+  margin: 0;
+}
+
+.evidence-sources-bar {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 8px;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 14px 12px;
+}
+
+@media (max-width: 600px) {
+  .evidence-sources-bar {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.evidence-sources-stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  text-align: center;
+}
+
+.evidence-sources-stat .stat-label {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--muted);
+}
+
+.evidence-sources-stat .stat-val {
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--navy);
+}
+
+.evidence-records-section {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.evidence-records-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.evidence-records-header h3 {
+  font-size: 16px;
+  font-weight: 800;
+  color: var(--navy);
+  margin: 0;
+}
+
+.evidence-add-form {
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.evidence-add-form h4 {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--navy);
+  margin: 0;
+}
+
+.evidence-items-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.evidence-log-item {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 16px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.evidence-log-item:hover {
+  border-color: var(--border-strong);
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.05);
+}
+
+.evidence-log-item.is-unconfirmed {
+  opacity: 0.85;
+  border-style: dashed;
+  background: var(--surface-2);
+}
+
+.evidence-item-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+}
+
+.evidence-item-badges {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.dna-pill {
+  display: inline-flex;
+  align-items: center;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 9px;
+  border-radius: 6px;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  color: var(--text-2);
+  white-space: nowrap;
+}
+
+.type-pill {
+  font-weight: 700;
+  background: #ede9fe;
+  color: #4f46e5;
+  border-color: #ddd6fe;
+}
+
+.status-pill {
+  text-transform: capitalize;
+  font-size: 10.5px;
+  background: #f1f5f9;
+  color: #475569;
+  border-color: #e2e8f0;
+}
+
+.evidence-item-actions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.evidence-source-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--navy);
+  margin: 0;
+}
+
+.evidence-context-quote {
+  margin: 0;
+  padding: 8px 14px;
+  background: var(--surface-2);
+  border-left: 3px solid var(--accent);
+  font-size: 13px;
+  color: var(--text-2);
+  font-style: italic;
+  border-radius: 0 8px 8px 0;
+  line-height: 1.5;
+}
+
+.evidence-notes-text {
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.dna-empty-box {
+  padding: 30px;
+  text-align: center;
+  color: var(--muted);
+  font-size: 14px;
+  background: var(--surface-2);
+  border-radius: 10px;
+  border: 1px dashed var(--border);
+}
+
+/* ---------------------------------------------------------------
+   Job DNA & Opportunity Fit (Phase 3) styles
+   --------------------------------------------------------------- */
+
+/* Top Navigation Tabs */
+.dna-top-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 6px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
+}
+
+.dna-top-tab {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 18px;
+  border-radius: 10px;
+  border: 0;
+  background: none;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--muted);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.dna-top-tab:hover {
+  background: var(--surface-2);
+  color: var(--text);
+}
+
+.dna-top-tab.active {
+  background: var(--navy);
+  color: #fff;
+  box-shadow: 0 2px 8px rgba(15, 21, 53, 0.15);
+}
+
+/* Job Intake */
+.job-dna-section {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+.job-intake-card {
+  border-top: 3px solid var(--accent);
+}
+
+.job-intake-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 8px;
+}
+
+.job-desc-label-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 6px;
+}
+
+.job-desc-label-row label {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-2);
+  margin: 0;
+}
+
+.job-intake-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  padding-top: 8px;
+}
+
+/* Analyzed Jobs Grid */
+.analyzed-jobs-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 16px;
+}
+
+@media (max-width: 640px) {
+  .analyzed-jobs-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.analyzed-job-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 18px 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 14px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.analyzed-job-card:hover {
+  border-color: var(--border-strong);
+  box-shadow: 0 4px 14px rgba(15, 23, 42, 0.06);
+}
+
+.analyzed-job-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.analyzed-job-company {
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--muted);
+}
+
+.analyzed-job-role {
+  font-size: 17px;
+  font-weight: 800;
+  color: var(--navy);
+  margin: 2px 0 0;
+}
+
+.analyzed-score-badge {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  min-width: 64px;
+  padding: 8px 10px;
+  border-radius: 12px;
+  background: #ede9fe;
+  border: 1px solid #ddd6fe;
+  flex-shrink: 0;
+}
+
+.analyzed-score-num {
+  font-size: 16px;
+  font-weight: 800;
+  color: #4f46e5;
+  line-height: 1;
+}
+
+.analyzed-score-label {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  line-height: 1;
+  text-transform: uppercase;
+  color: #6366f1;
+}
+
+.analyzed-job-details {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.pill-linked {
+  background: #f0fdf4;
+  color: #166534;
+  border-color: #bbf7d0;
+}
+
+.analyzed-job-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 10px;
+  border-top: 1px solid var(--border);
+}
+
+.analyzed-card-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Detailed Role Fit View */
+.job-fit-view {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.job-fit-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+/* Job Hero Card */
+.job-hero-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 24px 28px;
+  box-shadow: var(--shadow);
+  display: grid;
+  grid-template-columns: 1fr minmax(380px, 440px);
+  gap: 28px;
+  align-items: flex-start;
+}
+
+@media (max-width: 1080px) {
+  .job-hero-card {
+    grid-template-columns: 1fr;
+    gap: 20px;
+    padding: 20px;
+  }
+}
+
+@media (max-width: 640px) {
+  .job-hero-card {
+    padding: 16px;
+    gap: 16px;
+  }
+}
+
+.job-hero-company {
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--muted);
+}
+
+.job-hero-title {
+  font-size: 26px;
+  font-weight: 800;
+  color: var(--navy);
+  margin: 4px 0 10px;
+  letter-spacing: -0.02em;
+  line-height: 1.25;
+  word-break: break-word;
+}
+
+.job-hero-meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.job-hero-date {
+  font-size: 12px;
+}
+
+/* Score Box */
+.job-score-box {
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 18px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.job-score-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.job-score-circle {
+  width: 100px;
+  min-width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background: #f5f3ff;
+  border: 3.5px solid #c7d2fe;
+  box-shadow: 0 4px 14px rgba(99, 102, 241, 0.12);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  box-sizing: border-box;
+  padding: 6px;
+}
+
+.job-score-number {
+  font-size: 26px;
+  font-weight: 800;
+  color: #4f46e5;
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+
+.job-score-label {
+  font-size: 9.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #6366f1;
+  margin-top: 5px;
+  max-width: 72px;
+  line-height: 1.2;
+  text-align: center;
+}
+
+.job-score-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.fit-tier-badge {
+  display: inline-block;
+  font-size: 11.5px;
+  font-weight: 800;
+  padding: 4px 10px;
+  border-radius: 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  margin-bottom: 4px;
+  white-space: nowrap;
+}
+
+.tier-strong { background: #dcfce7; color: #15803d; border: 1px solid #bbf7d0; }
+.tier-moderate { background: #e0e7ff; color: #4338ca; border: 1px solid #c7d2fe; }
+.tier-gaps { background: #fef3c7; color: #b45309; border: 1px solid #fde68a; }
+.tier-mismatch { background: #fee2e2; color: #b91c1c; border: 1px solid #fecaca; }
+.tier-neutral { background: #f1f5f9; color: #475569; border: 1px solid #e2e8f0; }
+
+.job-score-breakdown {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.score-meter-row {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.score-meter-labels {
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-2);
+}
+
+.score-meter-track {
+  height: 6px;
+  background: #e2e8f0;
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.score-meter-fill {
+  height: 100%;
+  border-radius: 999px;
+  transition: width 0.3s ease;
+}
+
+.fill-required { background: #6366f1; }
+.fill-preferred { background: #14b8a6; }
+
+.job-formula-note {
+  border-top: 1px solid var(--border);
+  padding-top: 10px;
+  line-height: 1.4;
+}
+
+/* Highlights Grid */
+.job-highlights-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+@media (max-width: 960px) {
+  .job-highlights-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.highlight-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 18px 20px;
+}
+
+.highlight-card h3 {
+  font-size: 15px;
+  font-weight: 800;
+  color: var(--navy);
+  margin: 0 0 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.card-strengths h3 { color: #166534; }
+.card-missing h3 { color: #4338ca; }
+
+.highlight-list {
+  margin: 0;
+  padding-left: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 13px;
+  color: var(--text-2);
+}
+
+.highlight-subtitle {
+  margin: 0 0 10px;
+}
+
+.missing-evidence-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.missing-skill-chip {
+  font-size: 11.5px;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 6px;
+  background: #fef3c7;
+  color: #92400e;
+  border: 1px solid #fde68a;
+}
+
+.confirmed-gap-chip {
+  font-size: 11.5px;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 6px;
+  background: #fee2e2;
+  color: #b91c1c;
+  border: 1px solid #fecaca;
+}
+
+/* Requirements Section */
+.job-requirements-section {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 22px 26px;
+  box-shadow: var(--shadow);
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+@media (max-width: 640px) {
+  .job-requirements-section {
+    padding: 16px;
+    gap: 14px;
+  }
+}
+
+.job-requirements-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.job-requirements-header h2 {
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--navy);
+  margin: 0 0 4px;
+}
+
+.requirement-cards-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.requirement-match-card {
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 16px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  transition: border-color 0.12s;
+}
+
+.requirement-match-card:hover {
+  border-color: var(--border-strong);
+}
+
+.requirement-card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.requirement-name-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  flex: 1;
+  min-width: 240px;
+}
+
+.requirement-pills {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.pill-required {
+  background: #ede9fe;
+  color: #4f46e5;
+  border-color: #ddd6fe;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.pill-preferred {
+  background: #f1f5f9;
+  color: #475569;
+  border-color: #e2e8f0;
+  text-transform: capitalize;
+}
+
+.pill-overridden {
+  background: #fdf4ff;
+  color: #a21caf;
+  border-color: #f5d0fe;
+  font-style: italic;
+}
+
+.requirement-title {
+  font-size: 15px;
+  font-weight: 800;
+  color: var(--navy);
+  margin: 0;
+}
+
+.requirement-status-wrap {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+@media (max-width: 560px) {
+  .requirement-card-top {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .requirement-status-wrap {
+    width: 100%;
+    justify-content: space-between;
+  }
+}
+
+.fit-status-badge {
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 9px;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+
+.badge-strong { background: #dcfce7; color: #166534; border: 1px solid #bbf7d0; }
+.badge-partial { background: #e0e7ff; color: #3730a3; border: 1px solid #c7d2fe; }
+.badge-missing { background: #fef3c7; color: #92400e; border: 1px solid #fde68a; }
+.badge-mismatch { background: #fee2e2; color: #991b1b; border: 1px solid #fecaca; }
+.badge-clarify { background: #f3e8ff; color: #6b21a8; border: 1px solid #e9d5ff; }
+
+.requirement-evidence-body {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.evidence-proof-snippet {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 10px 12px;
+}
+
+.evidence-proof-label {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #059669;
+  display: block;
+  margin-bottom: 4px;
+}
+
+.evidence-sources-list {
+  margin: 0;
+  padding-left: 18px;
+  font-size: 13px;
+  color: var(--text-2);
+}
+
+.evidence-gap-snippet {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 8px 12px;
+  font-size: 12.5px;
+  color: var(--muted);
+}
+
+.evidence-gap-label {
+  font-weight: 700;
+  margin-right: 6px;
+}
+
+.user-override-note {
+  background: #fdf4ff;
+  border: 1px solid #f5d0fe;
+  padding: 6px 10px;
+  border-radius: 6px;
+  color: #86198f;
+}
+
+.recommended-step-box {
+  font-size: 12px;
+  color: var(--text-2);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.step-label {
+  font-weight: 700;
+  color: var(--navy);
+}
+
+/* Resume Tailoring Section */
+.job-tailoring-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 22px 26px;
+  box-shadow: var(--shadow);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.tailoring-header h3 {
+  font-size: 17px;
+  font-weight: 800;
+  color: var(--navy);
+  margin: 0 0 4px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.tailoring-items-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 14px;
+}
+
+.tailoring-item-card {
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 16px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.tailoring-section-title {
+  font-size: 13.5px;
+  font-weight: 800;
+  color: var(--navy);
+}
+
+.tailoring-original {
+  margin: 0;
+  padding: 6px 10px;
+  background: var(--surface);
+  border-left: 3px solid var(--border-strong);
+  font-size: 12.5px;
+  color: var(--muted);
+  font-style: italic;
+  border-radius: 0 6px 6px 0;
+}
+
+.tailoring-suggestion {
+  font-size: 13px;
+  color: var(--text);
+  line-height: 1.45;
+}
+
+.tailoring-rationale {
+  font-size: 11.5px;
+}
+
+/* Career DNA: provenance, review and corrections */
+.dna-source-badge {
+  display: inline-block; padding: 2px 8px; border-radius: 999px; font-size: 11px; font-weight: 700;
+  background: #fef3c7; color: #92400e; white-space: nowrap;
+}
+.dna-source-badge.confirmed { background: #dcfce7; color: #166534; }
+.dna-provenance { display: inline-flex; align-items: center; gap: 6px; }
+.dna-sub-card-tools { display: inline-flex; align-items: center; gap: 6px; flex-wrap: wrap; justify-content: flex-end; }
+.dna-review-gaps { border-left: 4px solid var(--stage-assessment); }
+.dna-review-gaps ul { margin: 6px 0 0; padding-left: 18px; font-size: 13.5px; color: var(--text-2); display: grid; gap: 4px; }
+.dna-inline-remove { align-self: flex-end; margin-bottom: 6px; }
+.dna-field small { font-size: 11.5px; }
+.dna-onboarding-hint { margin: 4px 0 0; text-align: center; }
+.job-intake-note { margin: 0; max-width: 520px; }
+.evidence-log-item.is-rejected { opacity: 0.6; }
+.evidence-log-item.is-rejected .evidence-source-title { text-decoration: line-through; }
+.evidence-items-list { list-style: none; padding: 0; margin: 0; }
+.evidence-search-box input { min-width: 0; }
+[role='tabpanel'][hidden] { display: none; }
+
+@media (max-width: 560px) {
+  .dna-top-tab { flex: 1 1 100%; justify-content: center; }
+  .dna-identity-main { min-width: 0 !important; }
+  .evidence-search-box { min-width: 0 !important; width: 100%; }
+  .dna-form-row { flex-direction: column; }
+  .dna-identity-top { flex-direction: column; align-items: stretch; }
+  .dna-overview-actions { flex-wrap: wrap; }
+  .dna-overview-actions .btn { flex: 1 1 auto; justify-content: center; }
+}
+
+/* Requirement patterns across saved jobs */
+.pattern-list { list-style: none; margin: 0; padding: 0; }
+.pattern-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 10px 2px; border-bottom: 1px solid var(--border); }
+.pattern-row:last-child { border-bottom: 0; }
+.dna-open-questions { margin: 6px 0 0; padding-left: 18px; font-size: 13px; color: var(--text-2); display: grid; gap: 3px; }
+.evidence-badge-dot { width: 7px; height: 7px; border-radius: 50%; background: currentColor; flex-shrink: 0; }
+
+/* ---------------------------------------------------------------
+   Action plan
+   --------------------------------------------------------------- */
+
+.action-plan { display: flex; flex-direction: column; gap: 20px; }
+.alert-success { background: #f0fdf4; border-color: #bbf7d0; color: #166534; }
+
+.rec-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 12px; }
+
+.rec-card,
+.experiment-card {
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--border-strong);
+  border-radius: 12px;
+  padding: 16px 18px;
+  background: var(--surface);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.rec-card.priority-high { border-left-color: #f59e0b; }
+.rec-card.priority-medium { border-left-color: var(--accent); }
+.rec-card.is-accepted { background: #fafaff; }
+
+.rec-meta { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; }
+.dna-pill.rec-priority-high { background: #fef3c7; color: #b45309; border-color: #fde68a; }
+.rec-title { font-size: 15.5px; font-weight: 800; color: var(--navy); margin: 0; }
+.rec-why { margin: 0; font-size: 14px; color: var(--text-2); line-height: 1.5; }
+
+.rec-details { font-size: 13.5px; }
+.rec-details summary { cursor: pointer; font-weight: 700; color: var(--accent); width: fit-content; }
+.rec-details summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 4px; }
+.rec-details ul { margin: 8px 0; padding-left: 18px; color: var(--text-2); }
+.rec-details p { margin: 6px 0 0; }
+
+.rec-actions { display: flex; flex-wrap: wrap; gap: 8px; padding-top: 4px; }
+
+.plan-history { margin-top: 14px; }
+.plan-history-list { list-style: none; padding: 0; margin: 8px 0 0; display: flex; flex-direction: column; }
+.plan-history-list li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 0;
+  border-top: 1px solid var(--border);
+}
+.plan-history-list li > div { display: flex; flex-direction: column; min-width: 0; }
+.plan-history-title { font-size: 13.5px; font-weight: 600; }
+
+.interview-recurring {
+  font-size: 13.5px;
+  padding: 10px 14px;
+  margin-bottom: 12px;
+  border-radius: 10px;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+}
+.interview-list { list-style: none; padding: 0; margin: 0 0 12px; display: flex; flex-direction: column; gap: 8px; }
+.interview-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 12px 14px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+}
+.interview-item.is-waiting { align-items: center; border-style: dashed; }
+
+.interview-note {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 16px 18px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--surface);
+}
+.interview-note-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; }
+.interview-note-body { display: flex; flex-direction: column; gap: 14px; }
+.interview-toggle {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  flex: 1;
+  min-width: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  font: inherit;
+  text-align: left;
+  color: inherit;
+  cursor: pointer;
+}
+.interview-toggle > span { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.interview-toggle:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; border-radius: 6px; }
+.interview-chevron { flex-shrink: 0; margin-top: 2px; color: var(--muted); transform: rotate(-90deg); transition: transform 0.15s; }
+.interview-note.is-open .interview-chevron { transform: none; }
+.interview-note h4 {
+  margin: 0 0 8px;
+  font-size: 11.5px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.interview-feedback {
+  margin: 0;
+  padding: 10px 14px;
+  border-left: 3px solid var(--accent);
+  border-radius: 0 10px 10px 0;
+  background: #f5f3ff;
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--text);
+}
+.interview-feedback span {
+  display: block;
+  margin-bottom: 2px;
+  font-size: 11.5px;
+  font-weight: 700;
+  color: var(--accent);
+}
+.interview-note-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px 24px; }
+.note-tags { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 6px; }
+.note-tags li {
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  font-size: 12.5px;
+  line-height: 1.4;
+}
+.note-tags.is-accent li { background: #ecfdf5; border-color: #a7f3d0; color: #065f46; font-weight: 600; }
+.note-questions { margin: 0; padding-left: 20px; display: flex; flex-direction: column; gap: 6px; font-size: 13.5px; line-height: 1.45; }
+.interview-practice { padding-top: 12px; border-top: 1px dashed var(--border); }
+.insight-cta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  padding-top: 12px;
+  border-top: 1px dashed var(--border);
+}
+.insight-cta p { margin: 0; max-width: 560px; }
+.insight-cta .btn { flex-shrink: 0; }
+.insight-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 14px 16px;
+  border-radius: 10px;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+}
+.insight-panel h4 { display: flex; align-items: center; gap: 2px; }
+.insight-panel p { margin: 0; }
+.insight-needs { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
+.insight-needs li {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 10px 12px;
+  border-radius: 9px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+}
+.insight-need-body { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
+.insight-needs li > .btn,
+.insight-needs li > .dna-pill { flex-shrink: 0; }
+
+@media (max-width: 560px) {
+  .insight-cta,
+  .insight-needs li { flex-direction: column; align-items: stretch; }
+}
+
+.plan-tabs { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 14px; }
+.plan-tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 14px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--surface);
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-2);
+  cursor: pointer;
+}
+.plan-tab:hover { border-color: var(--border-strong); }
+.plan-tab.active { background: var(--navy); border-color: var(--navy); color: #fff; }
+.plan-tab-count {
+  min-width: 20px;
+  padding: 1px 6px;
+  border-radius: 999px;
+  background: var(--surface-2);
+  color: var(--text-2);
+  font-size: 11.5px;
+  text-align: center;
+}
+.plan-tab.active .plan-tab-count { background: rgba(255, 255, 255, 0.18); color: #fff; }
+.plan-tab.is-done.active { background: #166534; border-color: #166534; }
+
+/* Looks like the other pills, but it's a real select so it works with a keyboard. */
+.priority-select {
+  appearance: none;
+  padding: 3px 24px 3px 10px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--surface-2) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='3'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E") no-repeat right 8px center;
+  font: inherit;
+  font-size: 11.5px;
+  font-weight: 700;
+  color: var(--text-2);
+  cursor: pointer;
+}
+.priority-select:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.priority-select.rec-priority-high { background-color: #fef3c7; border-color: #fde68a; color: #b45309; }
+
+.done-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
+.done-list li {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  border: 1px solid #bbf7d0;
+  border-radius: 10px;
+  background: #f0fdf4;
+}
+.done-check {
+  display: grid;
+  place-items: center;
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: #16a34a;
+  color: #fff;
+  font-size: 13px;
+  font-weight: 800;
+}
+.done-body { display: flex; flex-direction: column; flex: 1; min-width: 0; }
+.interview-body { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
+.interview-title { font-weight: 700; font-size: 14px; }
+.interview-actions { display: flex; gap: 4px; flex-shrink: 0; }
+
+.plan-toolbar { display: flex; justify-content: flex-end; margin-bottom: 12px; }
+.experiment-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; }
+.experiment-head .dna-pill { flex-shrink: 0; }
+.experiment-groups { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+.experiment-groups th,
+.experiment-groups td { text-align: left; padding: 6px 8px; border-bottom: 1px solid var(--border); }
+.experiment-groups thead th { font-size: 12px; color: var(--muted); font-weight: 700; }
+.experiment-conclusion { margin: 4px 0 0; font-weight: 700; font-size: 14px; }
+.experiment-limitations { margin: 0; padding-left: 18px; font-size: 12.5px; color: var(--muted); }
+.experiment-outcome { display: flex; flex-direction: column; gap: 4px; }
+.experiment-outcome textarea {
+  padding: 9px 12px;
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  font: inherit;
+  font-size: 13.5px;
+}
+
+@media (max-width: 560px) {
+  .rec-actions .btn { flex: 1 1 auto; justify-content: center; }
+  .experiment-groups th,
+  .experiment-groups td { padding: 6px 4px; }
 }

@@ -6,8 +6,9 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "dev": "node --watch index.js",
-    "test:classifier": "node scripts/testClassifier.js"
+    "dev": "nodemon index.js",
+    "test:classifier": "node scripts/testClassifier.js",
+    "test:career-dna": "node --test tests/careerDna.test.js"
   },
   "engines": {
     "node": ">=18.18"
@@ -21,6 +22,25 @@
     "express-session": "^1.19.0",
     "fastest-levenshtein": "^1.0.16",
     "googleapis": "^144.0.0",
-    "mongoose": "^8.9.0"
+    "mammoth": "^1.13.0",
+    "mongoose": "^8.9.0",
+    "multer": "^2.4.0",
+    "pdf-parse": "^2.4.5"
+  },
+  "devDependencies": {
+    "mongodb-memory-server": "^10.4.3",
+    "nodemon": "^3.1.14"
+  },
+  "nodemonConfig": {
+    "watch": [
+      "."
+    ],
+    "ext": "js,json",
+    "ignore": [
+      "tests/",
+      "node_modules/",
+      "package-lock.json"
+    ],
+    "delay": 500
   }
 }

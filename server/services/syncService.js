@@ -49,16 +49,22 @@ export async function applyResult(email, result, { userId, applications }) {
       link: result.link,
       lastSummary: result.summary,
       lastEmailAt: email.date,
+      firstEmailAt: email.date,
       lastMessageId: email.messageId,
       inferredFields,
       aiUpdatedAt: new Date(),
     });
-    await StageHistory.create({ applicationId: app._id, fromStage: null, toStage: stage, changedBy: 'ai' });
     applications.push(app.toObject());
+    await StageHistory.create({ applicationId: app._id, fromStage: null, toStage: stage, changedBy: 'ai' });
     return { status: 'created', applicationId: app._id };
   }
 
-  const app = await Application.findById(match._id);
+  const app = await Application.findOne({ _id: match._id, userId });
+  if (!app) {
+    // Deleted while this sync was running: respect that rather than bringing it back.
+    applications.splice(applications.indexOf(match), 1);
+    return { status: 'unchanged', applicationId: null };
+  }
   const fromStage = app.stage;
 
   // Older emails can only fill gaps. They must never replace newer details or move the stage.
@@ -91,7 +97,14 @@ export async function applyResult(email, result, { userId, applications }) {
     app.inferredFields = app.inferredFields.filter((f) => f !== 'stage');
   }
 
-  if (!app.isModified()) return { status: 'unchanged', applicationId: app._id };
+  // Cards from before this field existed fall back to when they were created.
+  const firstSeen = email.date < (app.firstEmailAt ?? app.createdAt) ? email.date : null;
+  if (!app.isModified()) {
+    // An earlier email date isn't news, so it's stored without marking the card as updated.
+    if (firstSeen) await Application.updateOne({ _id: app._id, userId }, { firstEmailAt: firstSeen });
+    return { status: 'unchanged', applicationId: app._id };
+  }
+  if (firstSeen) app.firstEmailAt = firstSeen;
 
   app.aiUpdatedAt = new Date();
   await app.save();

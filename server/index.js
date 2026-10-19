@@ -9,7 +9,12 @@ import authRoutes from './routes/auth.js';
 import applicationRoutes from './routes/applications.js';
 import syncRoutes from './routes/sync.js';
 import activityRoutes from './routes/activity.js';
+import careerDnaRoutes from './routes/careerDna.js';
+import jobDnaRoutes from './routes/jobDna.js';
+import actionPlanRoutes from './routes/actionPlan.js';
 import { migrateToMultiUser } from './scripts/migrateToMultiUser.js';
+import { migrateCareerDna } from './scripts/migrateCareerDna.js';
+import { aiUsage, aiBudget } from './services/gemini.js';
 
 const app = express();
 
@@ -34,18 +39,33 @@ app.use(
 );
 
 app.get('/api/health', (req, res) =>
-  res.json({ ok: true, db: mongoose.connection.readyState === 1 ? 'connected' : 'disconnected', model: config.gemini.model })
+  res.json({
+    ok: true,
+    db: mongoose.connection.readyState === 1 ? 'connected' : 'disconnected',
+    model: config.gemini.model,
+    aiUsage: aiUsage(),
+    aiBudget: aiBudget(),
+  })
 );
 app.use('/api/auth', authRoutes);
 app.use('/api/applications', requireLogin, applicationRoutes);
 app.use('/api/sync', requireLogin, syncRoutes);
+app.use('/api/career-dna/jobs', requireLogin, jobDnaRoutes);
+app.use('/api/career-dna/plan', requireLogin, actionPlanRoutes);
+app.use('/api/career-dna', requireLogin, careerDnaRoutes);
 app.use('/api', requireLogin, activityRoutes);
 
 app.use('/api', (req, res) => res.status(404).json({ error: `Not found: ${req.method} ${req.originalUrl}` }));
 // eslint-disable-next-line no-unused-vars
 app.use((err, req, res, next) => {
+  if (err.name === 'VersionError') {
+    return res.status(409).json({ error: 'This card was just updated by a sync. Reload and try again.' });
+  }
+  if (err.name === 'ValidationError' || err.name === 'CastError') return res.status(400).json({ error: 'Some of the values sent are invalid.' });
+  if (err.status && err.status < 500) return res.status(err.status).json({ error: err.message });
+  // Details stay in the server log; the browser only gets a generic message.
   console.error('[server] Unhandled error:', err);
-  res.status(err.status || 500).json({ error: err.message || 'Internal server error' });
+  res.status(500).json({ error: 'Something went wrong on the server. Please try again.' });
 });
 
 async function start() {
@@ -62,13 +82,29 @@ async function start() {
     process.exit(1);
   }
 
-  await migrateToMultiUser();
+  // Migrations are safe to repeat, so a failure is logged and retried on the next start instead of blocking the API.
+  try {
+    await migrateToMultiUser();
+    await migrateCareerDna();
+  } catch (err) {
+    console.error('[migrate] Failed, will retry on next start:', err.message);
+  }
 
-  app.listen(config.port, () => {
+  const server = app.listen(config.port, () => {
     console.log(`🚀 CareerPulse API running at ${config.serverUrl}`);
     console.log(`   Gemini model: ${config.gemini.model}${config.gemini.apiKey ? '' : '  (⚠ GEMINI_API_KEY missing)'}`);
     console.log(`   OAuth redirect URI: ${config.google.redirectUri}`);
     if (config.session.generated) console.warn('   ⚠ SESSION_SECRET missing in .env – using a temporary one (you will be signed out on restart).');
+  });
+
+  server.on('error', (err) => {
+    if (err.code === 'EADDRINUSE') {
+      console.error(`❌ Port ${config.port} is already in use – another copy of the API is probably still running.`);
+      console.error('   Stop it (or close the other terminal), or set a different PORT in .env.');
+    } else {
+      console.error('❌ Server error:', err.message);
+    }
+    process.exit(1);
   });
 }
 
